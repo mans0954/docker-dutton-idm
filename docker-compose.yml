@@ -1,0 +1,7 @@
+version: '3'
+services:
+  dutton-idm:
+    build: .
+    container_name: dutton-idm
+    domainname: docker
+
