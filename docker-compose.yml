@@ -2,6 +2,29 @@ version: '3'
 services:
   dutton-idm:
     build: .
-    container_name: dutton-idm
+    container_name: idm
     domainname: docker
+    links:
+    - postgres-idm
+    - rabbitmq-idm
+    environment:
+      - DATABASE_USER=postgres
+      - DATABASE_HOST=postgres-idm
+      - BROKER_SSL=no
+      - BROKER_HOSTNAME=rabbitmq-idm
+      - DJANGO_DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=idm.docker
+
+  postgres-idm:
+    image: postgres
+    container_name: postgres-idm
+    domainname: docker
+    environment:
+      - POSTGRES_DB=idm_core
+
+  rabbitmq-idm:
+    image: rabbitmq
+    container_name: rabbitmq-idm
+    domainname: docker
+
 
