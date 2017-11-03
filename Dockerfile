@@ -13,6 +13,8 @@ RUN pip3 install -r requirements.txt
 
 EXPOSE 8000
 
+RUN apt-get install -y telnet curl
+
 ADD start.sh start.sh
 RUN chmod a+x start.sh
 

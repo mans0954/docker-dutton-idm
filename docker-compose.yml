@@ -13,7 +13,8 @@ services:
       - BROKER_SSL=no
       - BROKER_HOSTNAME=rabbitmq-idm
       - DJANGO_DEBUG=1
-      - DJANGO_ALLOWED_HOSTS=idm.docker
+    ports:
+      - 8000:8000 
 
   postgres-idm:
     image: postgres
