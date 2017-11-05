@@ -25,5 +25,8 @@ RUN apt-get install -y krb5-user
 ADD start.sh start.sh
 RUN chmod a+x start.sh
 
+ENV KRB5_KTNAME=/idm-core/krb5.keytab
+ENV KRB5_CLIENT_KTNAME=/idm-core/krb5.keytab
+
 CMD ./start.sh
 
