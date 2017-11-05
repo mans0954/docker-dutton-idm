@@ -3,7 +3,8 @@ services:
   dutton-idm:
     build: .
     container_name: idm
-    domainname: docker
+    hostname: idm
+    domainname: example.org
     links:
     - postgres-idm
     - rabbitmq-idm
@@ -14,18 +15,48 @@ services:
       - BROKER_HOSTNAME=rabbitmq-idm
       - DJANGO_DEBUG=1
     ports:
-      - 8000:8000 
+      - 8000:8000
+    networks:
+      - example
 
   postgres-idm:
     image: postgres
     container_name: postgres-idm
-    domainname: docker
+    domainname: example.org
     environment:
       - POSTGRES_DB=idm_core
+    networks:
+      - example
 
   rabbitmq-idm:
     image: rabbitmq
     container_name: rabbitmq-idm
-    domainname: docker
+    domainname: example.org
+    networks:
+      - example
 
+  kadmin-idm:
+    image: mans0954/kerberos-kadmin
+    container_name: kadmin-idm
+    hostname: kadmin
+    domainname: example.org
+    volumes:
+      - krb5kdc:/etc/krb5kdc
+    networks:
+      - example
 
+  kdc-idm:
+    image: mans0954/kerberos-kdc
+    container_name: kdc-idm
+    hostname: kdc
+    domainname: example.org
+    volumes:
+      - krb5kdc:/etc/krb5kdc
+    networks:
+      - example
+
+volumes:
+  krb5kdc: {}
+
+networks:
+  example:

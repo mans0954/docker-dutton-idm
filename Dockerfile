@@ -15,6 +15,13 @@ EXPOSE 8000
 
 RUN apt-get install -y telnet curl
 
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+COPY krb5.conf /etc/krb5.conf
+RUN mkdir /var/log/kerberos/
+RUN apt-get install -y krb5-user
+
 ADD start.sh start.sh
 RUN chmod a+x start.sh
 
